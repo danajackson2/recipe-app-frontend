@@ -33,10 +33,15 @@ const Footer = () => {
           </p>
         </Row>
         <Row>
-          <Col xs={4} className="footer-byline">
+          <Col
+            sm={4}
+            xs={12}
+            className="footer-byline"
+            style={{ textAlign: "center" }}
+          >
             <p>Made by Dana Jackson and Ben Swanson © 2021</p>
           </Col>
-          <Col xs={4} style={{ textAlign: "center" }}>
+          <Col sm={4} xs={12} style={{ textAlign: "center" }}>
             <a href="mailto:danajackson2@gmail.com">danajackson2@gmail.com</a>
             <a href="https://github.com/danajackson2/">
               <FontAwesomeIcon icon={faGithub} className="mx-4" />
@@ -45,7 +50,7 @@ const Footer = () => {
               <FontAwesomeIcon icon={faLinkedin} />
             </a>
           </Col>
-          <Col xs={4} style={{ textAlign: "center" }}>
+          <Col sm={4} xs={12} style={{ textAlign: "center" }}>
             <a href="mailto:bswan0002@gmail.com">bswan0002@gmail.com</a>
             <a href="https://github.com/bswan0002/">
               <FontAwesomeIcon icon={faGithub} className="mx-4" />
