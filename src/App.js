@@ -3,6 +3,7 @@ import "./App.css";
 import "./custom.scss";
 // Components
 import Footer from "./components/Footer.js";
+//dana git push test
 
 function App() {
   return (
