@@ -18,55 +18,55 @@ function App() {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    if(localStorage.token){
-      persistUser(localStorage.token)
+    if (localStorage.token) {
+      persistUser(localStorage.token);
     }
-  }, [])
-  
-  function signUp(username, password){
-    fetch(`${process.env.REACT_APP_BASE_URL}/users`,{
-      method: 'POST',
-      headers: {'content-type':'application/json'},
-      body: JSON.stringify({new_user: {username, password}})
+  }, []);
+
+  function signUp(username, password) {
+    fetch(`${process.env.REACT_APP_BASE_URL}/users`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ new_user: { username, password } }),
     })
-    .then(res => res.json())
-    .then(data => handleAuthResponse(data))
+      .then((res) => res.json())
+      .then((data) => handleAuthResponse(data));
   }
 
-  function signIn(username, password){
-    fetch(`${process.env.REACT_APP_BASE_URL}/signin`,{
-      method: 'POST',
-      headers: {'content-type':'application/json'},
-      body: JSON.stringify({username, password})
+  function signIn(username, password) {
+    fetch(`${process.env.REACT_APP_BASE_URL}/signin`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ username, password }),
     })
-    .then(res => res.json())
-    .then(data => handleAuthResponse(data))
+      .then((res) => res.json())
+      .then((data) => handleAuthResponse(data));
   }
 
   const handleAuthResponse = (data) => {
     if (data.user_id) {
-        const { username, user_id, token} = data
-        localStorage.setItem('token', token)
-        setUser({ username, user_id })
+      const { username, user_id, token } = data;
+      localStorage.setItem("token", token);
+      setUser({ username, user_id });
     } else {
-        alert(`Username ${data.username}`)
-    }   
-  }
+      alert(`Username ${data.username}`);
+    }
+  };
 
   const persistUser = (token) => {
-    fetch(`${process.env.REACT_APP_BASE_URL}/persist`,{
-      headers: {Authorization: `Bearer ${token}`}
+    fetch(`${process.env.REACT_APP_BASE_URL}/persist`, {
+      headers: { Authorization: `Bearer ${token}` },
     })
-    .then(res => res.json())
-    .then(data => {
-      const { username, user_id } = data
-      setUser({ username, user_id })
-    })
-  }
+      .then((res) => res.json())
+      .then((data) => {
+        const { username, user_id } = data;
+        setUser({ username, user_id });
+      });
+  };
 
-  function signOut(){
+  function signOut() {
     localStorage.clear();
-    setUser({})
+    setUser({});
   }
 
   const [recipes, setRecipes] = useState([
@@ -89,13 +89,25 @@ function App() {
         },
       ],
       "instructions": "put the lime in the coconut and mix it all up",
+      "comments": [
+        {
+          "user": "Ben",
+          "body": "this is a great recipe dad",
+          "timestamp": "created_at_here",
+        },
+      ],
     },
   ]);
   return (
     <>
       <div className="body">
         <Router>
-          <TopNav user={user} signIn={signIn} signUp={signUp} signOut={signOut}/>
+          <TopNav
+            user={user}
+            signIn={signIn}
+            signUp={signUp}
+            signOut={signOut}
+          />
         </Router>
         <Feed recipes={recipes} />
       </div>

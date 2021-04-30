@@ -4,6 +4,10 @@
   flex: 1 0 auto;
 }
 
+.orange {
+  color: #fd5523;
+}
+
 h1,
 h2,
 h3,
@@ -57,4 +61,17 @@ p {
 .feedbar-newrecipe:hover {
   color: #264e42;
   cursor: pointer;
+}
+
+/* RecipeForm */
+.recipeform-minus:hover {
+  color: #264e42;
+  background-color: #49a08679;
+  transition: 300ms;
+  cursor: pointer;
+}
+
+.recipeform-remainingchars {
+  position: absolute;
+  bottom: 0;
 }

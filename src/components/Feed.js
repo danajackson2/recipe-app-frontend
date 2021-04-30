@@ -9,6 +9,7 @@ const Feed = ({ recipes }) => {
   return (
     <>
       <FeedBar />
+      <RecipeForm />
       <Container className="mt-4">
         <h1>Latest Recipes</h1>
         <FeedCard recipe={recipes[0]} />
