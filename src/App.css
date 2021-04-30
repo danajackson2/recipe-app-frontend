@@ -58,3 +58,49 @@ p {
   color: #264e42;
   cursor: pointer;
 }
+
+.recipe-header {
+  margin: 30px 0 10px;
+}
+
+.view-image {
+  object-fit: cover;
+  width: 60%;
+  height: 25rem;
+  margin:20px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px 6px rgba(0, 0, 0, 0.4);
+}
+
+.recipe-contents-headers {
+  margin: 30px;
+  text-align: center;
+}
+
+.ingr-list {
+  background-color: #B9E4C9;
+}
+
+.ingr-item {
+  font-size: 20px;
+}
+
+#likes-comments-div {
+  border:'1px solid black';
+  width: 50%;
+}
+
+.like-div {
+  margin: 15px 0;
+}
+
+.like:hover {
+  cursor: pointer;
+}
+
+.comment-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-family: "Lekton", sans-serif;
+}
