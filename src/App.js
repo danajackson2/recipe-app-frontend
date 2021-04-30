@@ -11,7 +11,8 @@ import "./App.css";
 import "./custom.scss";
 // Components
 import TopNav from "./components/TopNav";
-import Footer from "./components/Footer.js";
+import Feed from "./components/Feed";
+import Footer from "./components/Footer";
 
 function App() {
   const [user, setUser] = useState({});
@@ -21,6 +22,7 @@ function App() {
         <Router>
           <TopNav user={user} />
         </Router>
+        <Feed />
       </div>
       <Footer />
     </>

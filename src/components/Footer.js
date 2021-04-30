@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import {
   faReact,
   faBootstrap,
@@ -32,11 +32,20 @@ const Footer = () => {
             Bootstrap
           </p>
         </Row>
-        <Row className="d-flex justify-content-center">
-          <div className="mr-4 footer-byline">
-            <p>Made by Ben Swanson © 2021</p>
-          </div>
-          <div className="ml-4">
+        <Row>
+          <Col xs={4} className="footer-byline">
+            <p>Made by Dana Jackson and Ben Swanson © 2021</p>
+          </Col>
+          <Col xs={4} style={{ textAlign: "center" }}>
+            <a href="mailto:danajackson2@gmail.com">danajackson2@gmail.com</a>
+            <a href="https://github.com/danajackson2/">
+              <FontAwesomeIcon icon={faGithub} className="mx-4" />
+            </a>
+            <a href="https://www.linkedin.com/in/danajackson2/">
+              <FontAwesomeIcon icon={faLinkedin} />
+            </a>
+          </Col>
+          <Col xs={4} style={{ textAlign: "center" }}>
             <a href="mailto:bswan0002@gmail.com">bswan0002@gmail.com</a>
             <a href="https://github.com/bswan0002/">
               <FontAwesomeIcon icon={faGithub} className="mx-4" />
@@ -44,7 +53,7 @@ const Footer = () => {
             <a href="https://www.linkedin.com/in/bswan0002/">
               <FontAwesomeIcon icon={faLinkedin} />
             </a>
-          </div>
+          </Col>
         </Row>
       </Container>
     </footer>
