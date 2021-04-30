@@ -21,7 +21,7 @@ function App() {
     if(localStorage.token){
       persistUser(localStorage.token)
     }
-  }, [user])
+  }, [])
   
   function signUp(username, password){
     fetch(`${process.env.REACT_APP_BASE_URL}/users`,{
@@ -65,7 +65,7 @@ function App() {
   }
 
   function signOut(){
-    localStorage.clear()
+    localStorage.clear();
     setUser({})
   }
 
