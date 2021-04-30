@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Navbar, Nav, Dropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
-const TopNav = ({ user, signIn, signUp }) => {
+const TopNav = ({ user, signIn, signUp, signOut }) => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -23,9 +23,7 @@ const TopNav = ({ user, signIn, signUp }) => {
         </LinkContainer>
         {"username" in user ? (
           <Nav>
-            <LinkContainer to="sign-up">
-              <Nav.Link>Sign Out</Nav.Link>
-            </LinkContainer>
+            <button onClick={signOut} className='btn btn-primary'>Sign Out</button>
           </Nav>
         ) : (
           <Nav>
