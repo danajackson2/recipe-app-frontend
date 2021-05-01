@@ -22,12 +22,14 @@ const LikesComments = ({ recipe, user, updateUserLikes, fetchRecipes}) => {
                 body: JSON.stringify({new_comment: { body: comment, user_id: user.user_id, recipe_id: recipe.id }})
             })
             .then(res => res.json())
-            .then(fetchRecipes())
-            .then(setComment(''))
+            .then(() => fetchRecipes())
+
+            setComment('')
         }
     }
-    
+
     const toggleLike = () => {
+        //if no user don't run
         const like = user.likes.find(like => like.recipe_id === recipe.id)
         if (!!like) {
             fetch(`${process.env.REACT_APP_BASE_URL}/likes/${like.id}`,{
@@ -40,6 +42,7 @@ const LikesComments = ({ recipe, user, updateUserLikes, fetchRecipes}) => {
                 let span = document.querySelector('#like-count')
                 let count = parseInt(document.querySelector('#like-count').textContent)
                 span.textContent = count - 1
+                //fetchRecipes() ??
             })
         } else {
             fetch(`${process.env.REACT_APP_BASE_URL}/likes`,{
@@ -57,10 +60,14 @@ const LikesComments = ({ recipe, user, updateUserLikes, fetchRecipes}) => {
         }
     }
 
+    const heartClass = () => {
+        return !!user.likes?.find(like => like.recipe_id === recipe.id)
+    }
+
     return (
         <div id="lc-div">
             <div className='like-div'>
-                <span onClick={toggleLike} className={'like'}>❤️ </span><span id='like-count'>{recipe.likes}</span>
+                <span onClick={toggleLike} id='like' className={heartClass() ? 'hl' : ''}>❤️ </span><span id='like-count'>{recipe.likes}</span>
             </div>
             <div>
                 <Form>

@@ -105,7 +105,11 @@ p {
   color: #fd5523;
 }
 
-.like:hover {
+.hl {
+  text-shadow: rgb(255, 0, 0) 0 0 15px;
+}
+
+#like:hover {
   cursor: pointer;
 }
 
