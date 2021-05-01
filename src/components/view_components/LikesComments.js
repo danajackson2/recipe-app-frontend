@@ -12,21 +12,21 @@ const LikesComments = ({ likes, comments, addLike }) => {
     }
 
     return (
-        <div id="likes-comments-div">
-            <div className={'like-div'}>
+        <div id="lc-div">
+            <div className='like-div'>
                 <span onClick={addLike} className={'like'}>❤️ </span><span>{likes}</span>
             </div>
-            <div className={'leave-comment'}>
+            <div>
                 <Form>
                     <Form.Group>
-                        <Form.Label>Leave a comment: </Form.Label>
+                        <Form.Label><span className='comment'>Leave a comment </span></Form.Label>
                         <Form.Control onChange={handleComChange} type="text" value={comment}/>
                     </Form.Group>
                 </Form>
                 <p>{140-comment.length} chars remaining</p>
             </div>
-            <div>
-                Comments
+            <div >
+                <span className='comment'>Comments</span>
                 <ul className='comment-list'>
                    {comments.map(c => <li><b>{c.username} </b>says "{c.body}"</li>)}        
                 </ul>

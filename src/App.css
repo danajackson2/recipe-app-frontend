@@ -85,13 +85,20 @@ p {
   font-size: 20px;
 }
 
-#likes-comments-div {
-  border:'1px solid black';
-  width: 50%;
+#lc-div {
+  border: 2px solid #336858;
+  border-radius: 15px;
+  padding: 20px;
+  width: 60%;
+  margin-top: 60px;
 }
 
 .like-div {
   margin: 15px 0;
+}
+
+.comment {
+  color: #fd5523;
 }
 
 .like:hover {
