@@ -35,6 +35,8 @@ p {
 .input-item {
   margin: 5px;
 }
+
+/* FeedCard */
 .feedcard {
   width: 18rem;
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
@@ -64,7 +66,7 @@ p {
   background-color: #ece9d5;
 }
 
-.feedbar-newrecipe:hover {
+.feedbar-icon:hover {
   color: #264e42;
   cursor: pointer;
 }
@@ -77,7 +79,7 @@ p {
   object-fit: cover;
   width: 60%;
   height: 25rem;
-  margin:20px;
+  margin: 20px;
   border-radius: 15px;
   box-shadow: 0 0 10px 6px rgba(0, 0, 0, 0.4);
 }
@@ -88,7 +90,7 @@ p {
 }
 
 .ingr-list {
-  background-color: #B9E4C9;
+  background-color: #b9e4c9;
 }
 
 .ingr-item {
@@ -141,4 +143,5 @@ p {
 #welcome {
   color: white;
   margin: 0 30px;
+  line-height: 1.8;
 }
