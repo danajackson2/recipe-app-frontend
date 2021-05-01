@@ -20,8 +20,8 @@ function App() {
   const [recipes, setRecipes] = useState(JSON.parse(localStorage.getItem("recipes")) || [])
 
   useEffect(() => {
-    if(localStorage.token){
-      persistUser(localStorage.token)
+    if (localStorage.token) {
+      persistUser(localStorage.token);
     }
   }, [])
   
@@ -50,11 +50,11 @@ function App() {
     .then(() => fetchRecipes())
   }
 
-  function signIn(username, password){
-    fetch(`${process.env.REACT_APP_BASE_URL}/signin`,{
-      method: 'POST',
-      headers: {'content-type':'application/json'},
-      body: JSON.stringify({username, password})
+  function signIn(username, password) {
+    fetch(`${process.env.REACT_APP_BASE_URL}/signin`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ username, password }),
     })
     .then(res => res.json())
     .then(data => handleAuthResponse(data))
@@ -63,28 +63,28 @@ function App() {
 
   const handleAuthResponse = (data) => {
     if (data.user_id) {
-        const { username, user_id, token} = data
-        localStorage.setItem('token', token)
-        setUser({ username, user_id })
+      const { username, user_id, token } = data;
+      localStorage.setItem("token", token);
+      setUser({ username, user_id });
     } else {
-        alert(`Username ${data.username}`)
-    }   
-  }
+      alert(`Username ${data.username}`);
+    }
+  };
 
   const persistUser = (token) => {
-    fetch(`${process.env.REACT_APP_BASE_URL}/persist`,{
-      headers: {Authorization: `Bearer ${token}`}
+    fetch(`${process.env.REACT_APP_BASE_URL}/persist`, {
+      headers: { Authorization: `Bearer ${token}` },
     })
-    .then(res => res.json())
-    .then(data => {
-      const { username, user_id } = data
-      setUser({ username, user_id })
-    })
-  }
+      .then((res) => res.json())
+      .then((data) => {
+        const { username, user_id } = data;
+        setUser({ username, user_id });
+      });
+  };
 
-  function signOut(){
+  function signOut() {
     localStorage.clear();
-    setUser({})
+    setUser({});
   }
 
   return (
