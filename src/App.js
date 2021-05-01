@@ -14,6 +14,7 @@ import TopNav from "./components/TopNav";
 import Feed from "./components/Feed";
 import Footer from "./components/Footer";
 import View from "./components/View";
+import UserView from './components/UserView'
 
 function App() {
   const [user, setUser] = useState({});
@@ -118,34 +119,30 @@ function App() {
     <>
       <div className="body">
         <Router>
-          <TopNav
-            user={user}
-            signIn={signIn}
-            signUp={signUp}
-            signOut={signOut}
-          />
-          <Route
-            exact
-            path="/recipes/:id"
-            render={(routerProps) => {
-              const urlId = parseInt(routerProps.match.params.id);
-              if (!!recipes.find((r) => r.id === urlId)) {
-                return (
-                  <View
-                    fetchRecipes={fetchRecipes}
-                    updateUserLikes={updateUserLikes}
-                    updateRecipeLikes={updateRecipeLikes}
-                    user={user}
-                    recipe={recipes.find((r) => r.id === urlId)}
-                  />
-                );
-              }
-            }}
-          />
-          <Route
-            exact
-            path="/"
-            render={(routerProps) => (
+          <TopNav user={user} signIn={signIn} signUp={signUp} signOut={signOut}/>
+          <Route exact path='/recipes/:id' render={routerProps => {
+            const urlId = parseInt(routerProps.match.params.id)
+              if(!!recipes.find(r => r.id === urlId)){
+                return <View 
+                  fetchRecipes={fetchRecipes} 
+                  updateUserLikes={updateUserLikes} 
+                  updateRecipeLikes={updateRecipeLikes}
+                  user={user} 
+                  recipe={recipes.find(r => r.id === urlId)}
+                />
+            } 
+          }}/>
+          <Route exact path='/users/:id' render={routerProps => {
+            const urlId = parseInt(routerProps.match.params.id)
+              return <UserView 
+                selected_user_id={urlId} 
+                user={user} 
+                routerProps={routerProps}
+              /> 
+          }}/>
+           <Route
+            exact path="/"
+            render={routerProps => (
               <Feed
                 recipes={recipes}
                 user_id={user.user_id}
