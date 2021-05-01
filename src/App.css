@@ -142,3 +142,15 @@ p {
   color: white;
   margin: 0 30px;
 }
+
+#user-view-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+#user-view-header {
+  text-align: center;
+  text-decoration: underline;
+}

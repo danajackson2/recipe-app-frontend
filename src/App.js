@@ -134,7 +134,11 @@ function App() {
           }}/>
           <Route exact path='/users/:id' render={routerProps => {
             const urlId = parseInt(routerProps.match.params.id)
-              return <UserView user_id={urlId}/> 
+              return <UserView 
+                selected_user_id={urlId} 
+                user={user} 
+                routerProps={routerProps}
+              /> 
           }}/>
            <Route
             exact path="/"
