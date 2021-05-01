@@ -25,9 +25,9 @@ function App() {
     if (localStorage.token) {
       persistUser(localStorage.token);
     }
-    fetchRecipes()
-  }, [])
-  
+    fetchRecipes();
+  }, []);
+
   const fetchRecipes = () => {
     fetch(`${process.env.REACT_APP_BASE_URL}/recipes`, {
       headers: {
@@ -91,40 +91,53 @@ function App() {
   }
 
   const updateUserLikes = (like, type) => {
-    if (type === 'rmv'){
-      const newLikes = user.likes.filter(likeItem => likeItem.id !== like.id)
-      setUser({...user, likes: newLikes})
+    if (type === "rmv") {
+      const newLikes = user.likes.filter((likeItem) => likeItem.id !== like.id);
+      setUser({ ...user, likes: newLikes });
     } else {
-      const newLikes = [...user.likes, like]
-      setUser({...user, likes: newLikes})
+      const newLikes = [...user.likes, like];
+      setUser({ ...user, likes: newLikes });
     }
-  }
+  };
 
   return (
     <>
       <div className="body">
         <Router>
-          <TopNav user={user} signIn={signIn} signUp={signUp} signOut={signOut}/>
-          <Route exact path='/recipes/:id' render={routerProps => {
-            const urlId = parseInt(routerProps.match.params.id)
-            if(recipes.map(r => r.id).includes(urlId)){
-              return <View 
-                fetchRecipes={fetchRecipes} 
-                updateUserLikes={updateUserLikes} 
-                user={user} 
-                recipe={recipes.find(r => r.id === urlId)}
-              />
-            } 
-          }}/>
-           <Route
-            exact path="/"
+          <TopNav
+            user={user}
+            signIn={signIn}
+            signUp={signUp}
+            signOut={signOut}
+          />
+          <Route
+            exact
+            path="/recipes/:id"
+            render={(routerProps) => {
+              const urlId = parseInt(routerProps.match.params.id);
+              if (recipes.map((r) => r.id).includes(urlId)) {
+                return (
+                  <View
+                    fetchRecipes={fetchRecipes}
+                    updateUserLikes={updateUserLikes}
+                    user={user}
+                    recipe={recipes.find((r) => r.id === urlId)}
+                  />
+                );
+              }
+            }}
+          />
+          <Route
+            exact
+            path="/"
             render={() => (
               <Feed
                 recipes={recipes}
                 user_id={user.user_id}
                 fetchRecipes={fetchRecipes}
-              />)}
-            />
+              />
+            )}
+          />
         </Router>
       </div>
       <Footer />
