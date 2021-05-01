@@ -22,9 +22,13 @@ const TopNav = ({ user, signIn, signUp, signOut }) => {
           <Navbar.Brand>RecipeApp</Navbar.Brand>
         </LinkContainer>
         {"username" in user ? (
-          <Nav>
-            <button onClick={signOut} className='btn btn-primary'>Sign Out</button>
-          </Nav>
+          <div style={{display:'flex'}}>
+            <h4 id='welcome'>Hi, {user.username}!</h4>
+            <Nav>
+              <button onClick={signOut} className='btn btn-primary'>Sign Out</button>
+            </Nav>
+          </div>
+    
         ) : (
           <Nav>
             <Dropdown onToggle={e => emptyInput(e, 'sign-in')}>

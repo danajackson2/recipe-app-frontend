@@ -100,6 +100,20 @@ function App() {
     }
   }
 
+  const updateRecipeLikes = (recipe_id, type) => {
+    let newRecipe = recipes.find(r => r.id === recipe_id)
+
+    if (type === 'add'){
+      newRecipe = {...newRecipe, likes: newRecipe.likes + 1}
+    } else {
+      newRecipe = {...newRecipe, likes: newRecipe.likes - 1}
+    }
+
+    const otherRecipes = recipes.filter(r => r.id !== recipe_id)
+    otherRecipes.push(newRecipe)
+    setRecipes(otherRecipes)
+  }
+
   return (
     <>
       <div className="body">
@@ -107,22 +121,24 @@ function App() {
           <TopNav user={user} signIn={signIn} signUp={signUp} signOut={signOut}/>
           <Route exact path='/recipes/:id' render={routerProps => {
             const urlId = parseInt(routerProps.match.params.id)
-            if(recipes.map(r => r.id).includes(urlId)){
-              return <View 
-                fetchRecipes={fetchRecipes} 
-                updateUserLikes={updateUserLikes} 
-                user={user} 
-                recipe={recipes.find(r => r.id === urlId)}
-              />
+              if(!!recipes.find(r => r.id === urlId)){
+                return <View 
+                  fetchRecipes={fetchRecipes} 
+                  updateUserLikes={updateUserLikes} 
+                  updateRecipeLikes={updateRecipeLikes}
+                  user={user} 
+                  recipe={recipes.find(r => r.id === urlId)}
+                />
             } 
           }}/>
            <Route
             exact path="/"
-            render={() => (
+            render={routerProps => (
               <Feed
                 recipes={recipes}
                 user_id={user.user_id}
                 fetchRecipes={fetchRecipes}
+                routerProps={routerProps}
               />)}
             />
         </Router>

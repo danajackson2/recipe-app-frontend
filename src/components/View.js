@@ -1,7 +1,7 @@
 import { Container, Row, Image, Col, ListGroup } from "react-bootstrap";
 import LikesComments from './view_components/LikesComments'
 
-const View = ({ user, recipe, updateUserLikes, fetchRecipes }) => {
+const View = ({ user, recipe, updateUserLikes, updateRecipeLikes, fetchRecipes }) => {
     
     return (
         <Container>
@@ -29,7 +29,8 @@ const View = ({ user, recipe, updateUserLikes, fetchRecipes }) => {
             <Row className={'justify-content-center'}>
                 <LikesComments 
                     fetchRecipes={fetchRecipes} 
-                    updateUserLikes={updateUserLikes} 
+                    updateUserLikes={updateUserLikes}
+                    updateRecipeLikes={updateRecipeLikes} 
                     user={user} 
                     recipe={recipe}
                 />

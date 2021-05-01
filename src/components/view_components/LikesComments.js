@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 
-const LikesComments = ({ recipe, user, updateUserLikes, fetchRecipes}) => {
-    
+const LikesComments = ({ recipe, user, updateUserLikes, updateRecipeLikes, fetchRecipes}) => {
+
     const [comment, setComment] = useState('')
 
     const handleComChange = (e) => {
@@ -29,20 +29,17 @@ const LikesComments = ({ recipe, user, updateUserLikes, fetchRecipes}) => {
     }
 
     const toggleLike = () => {
-        if (!!user){
-            const like = user.likes.find(like => like.recipe_id === recipe.id)
-            if (!!like) {
-                fetch(`${process.env.REACT_APP_BASE_URL}/likes/${like.id}`,{
+        if (!!user.username){
+            const foundLike = user.likes.find(like => like.recipe_id === recipe.id)
+            if (!!foundLike) {
+                fetch(`${process.env.REACT_APP_BASE_URL}/likes/${foundLike.id}`,{
                     method: 'DELETE',
                     headers: {Authorization: `Bearer ${localStorage.token}`}
                 })
                 .then(res => res.json())
                 .then(() => {
-                    updateUserLikes(like, 'rmv')
-                    let span = document.querySelector('#like-count')
-                    let count = parseInt(document.querySelector('#like-count').textContent)
-                    span.textContent = count - 1
-                    //fetchRecipes() ??
+                    updateUserLikes(foundLike, 'rmv')
+                    updateRecipeLikes(recipe.id, 'rmv')
                 })
             } else {
                 fetch(`${process.env.REACT_APP_BASE_URL}/likes`,{
@@ -53,13 +50,11 @@ const LikesComments = ({ recipe, user, updateUserLikes, fetchRecipes}) => {
                 .then(res => res.json())
                 .then(like => {
                     updateUserLikes(like, 'add')
-                    let span = document.querySelector('#like-count')
-                    let count = parseInt(document.querySelector('#like-count').textContent)
-                    span.textContent = count + 1
+                    updateRecipeLikes(recipe.id, 'add')
                 })
             }
         } else {
-            alert('Must be signed in.')
+            alert('Sign in to like a recipe and leave comments.')
         }
     }
 
@@ -70,18 +65,26 @@ const LikesComments = ({ recipe, user, updateUserLikes, fetchRecipes}) => {
     return (
         <div id="lc-div">
             <div className='like-div'>
-                <span onClick={toggleLike} id='like' className={heartClass() ? 'hl' : ''}>❤️ </span><span id='like-count'>{recipe.likes}</span>
+                <span 
+                    onClick={toggleLike} id='like' 
+                    className={heartClass() ? 'hl' : ''}
+                >❤️ </span>
+                <span 
+                    id='like-count'
+                >{recipe.likes}</span>
             </div>
-            <div>
-                <Form>
-                    <Form.Group>
-                        <Form.Label><span className='comment'>Leave a comment </span></Form.Label>
-                        <Form.Control onChange={handleComChange} type="text" value={comment}/>
-                        <Button onClick={addComment}>Submit</Button>
-                    </Form.Group>
-                </Form>
-                <p>{140-comment.length} chars remaining</p>
-            </div>
+                { !!user.username &&
+                <>
+                    <Form>
+                        <Form.Group>
+                            <Form.Label><span className='comment'>Leave a comment </span></Form.Label>
+                            <Form.Control onChange={handleComChange} type="text" value={comment}/>
+                            <Button onClick={addComment} style={{marginTop:'5px'}}>Submit</Button>
+                        </Form.Group>
+                    </Form>
+                    <p>{140-comment.length} chars remaining</p>
+                </>
+                }
             <div >
                 <span className='comment'>Comments</span>
                 <ul className='comment-list'>
