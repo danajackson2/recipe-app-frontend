@@ -5,6 +5,7 @@ const View = ({ user, recipe, updateUserLikes, updateRecipeLikes, fetchRecipes }
     
     return (
         <Container>
+            <div className='px-4 mx-4'>
             <Row className={'justify-content-center recipe-header'}>
                 <h1>{recipe.name}</h1>
             </Row>
@@ -35,6 +36,7 @@ const View = ({ user, recipe, updateUserLikes, updateRecipeLikes, fetchRecipes }
                     recipe={recipe}
                 />
             </Row>
+            </div>
         </Container>
     )
 }
