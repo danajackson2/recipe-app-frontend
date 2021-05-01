@@ -17,6 +17,7 @@ import View from './components/View';
 
 function App() {
   const [user, setUser] = useState({});
+  const [recipes, setRecipes] = useState(JSON.parse(localStorage.getItem("recipes")) || [])
 
   useEffect(() => {
     if(localStorage.token){
@@ -24,6 +25,20 @@ function App() {
     }
   }, [])
   
+  const fetchRecipes = () => {
+    fetch(`${process.env.REACT_APP_BASE_URL}/recipes`, {
+      headers: {
+        'content-type':'application/json', 
+        Authorization: `Bearer ${localStorage.token}`
+      }   
+    })
+    .then(res => res.json())
+    .then(recipes => {
+      setRecipes(recipes)
+      localStorage.setItem('recipes', JSON.stringify(recipes))
+    })
+  }
+
   function signUp(username, password){
     fetch(`${process.env.REACT_APP_BASE_URL}/users`,{
       method: 'POST',
@@ -32,6 +47,7 @@ function App() {
     })
     .then(res => res.json())
     .then(data => handleAuthResponse(data))
+    .then(() => fetchRecipes())
   }
 
   function signIn(username, password){
@@ -42,6 +58,7 @@ function App() {
     })
     .then(res => res.json())
     .then(data => handleAuthResponse(data))
+    .then(() => fetchRecipes())
   }
 
   const handleAuthResponse = (data) => {
@@ -70,42 +87,6 @@ function App() {
     setUser({})
   }
 
-  const [recipes, setRecipes] = useState([
-    {
-      "id":1,
-      "title": "Chef's Treat",
-      "description": "This is a lovely lil treat for the chef.",
-      "img":
-        "https://images.themodernproper.com/billowy-turkey/production/posts/2019/Chicken-Picatta-8.jpg?w=1200&auto=compress%2Cformat&fit=crop&fp-x=0.5&fp-y=0.5&dm=1599767276&s=2aa0bf00be2c34de44c1fb93a32ca68f",
-      "user_id": 1,
-      "username": 'danajackson',
-      "ingredients": [
-        {
-          "name": "flour",
-          "quantity": 1.5,
-          "quantity_type": "cups",
-        },
-        {
-          "name": "butter",
-          "quantity": 4,
-          "quantity_type": "tbsp",
-        },
-      ],
-      "instructions": "put the lime in the coconut and mix it all up",
-      "likes": [
-        {user_id: 5, recipe_id: 1},
-        {user_id: 2, recipe_id: 1},
-        {user_id: 1, recipe_id: 1},
-        {user_id: 1, recipe_id: 1}
-      ],
-      "comments": [
-        {'username': 'danajackson', 'recipe_id':1, 'body':"This is a freakin' great recipe This is a freakin' great recipe This is a freakin' great recipe"},
-        {'username': 'benswanson', 'recipe_id':1, 'body':"So tasty and schmekles"},
-        {'username': 'danajackson', 'recipe_id':1, 'body':"Wowowowowooowow OMG SHEESH AMAZING"},
-
-      ]
-    },
-  ]);
   return (
     <>
       <div className="body">
@@ -114,7 +95,7 @@ function App() {
           <Route exact path='/recipes/:id' render={routerProps => {
             const urlId = parseInt(routerProps.match.params.id)
             if(recipes.map(r => r.id).includes(urlId)){
-              return <View recipe={recipes.find(r => r.id === urlId)}/>
+              return <View user_id={user.id} recipe={recipes.find(r => r.id === urlId)}/>
             } 
           }}/>
           <Route exact path='/' render={() => <Feed recipes={recipes} />}/>

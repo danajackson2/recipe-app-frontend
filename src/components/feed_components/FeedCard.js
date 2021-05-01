@@ -3,7 +3,7 @@ import { Card, Button } from "react-bootstrap";
 const FeedCard = ({ recipe }) => {
   return (
     <Card className="feedcard">
-      <Card.Img variant="top" src={recipe.image} className="feedcard-image" />
+      <Card.Img variant="top" src={recipe.img} className="feedcard-image" />
       <Card.Body>
         <Card.Title className="feedcard-title">{recipe.title}</Card.Title>
         <Card.Text>{recipe.description}</Card.Text>

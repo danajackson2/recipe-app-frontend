@@ -1,17 +1,12 @@
 import { Container, Row, Image, Col, ListGroup } from "react-bootstrap";
 import LikesComments from './view_components/LikesComments'
 
-const View = ({ recipe }) => {
-    
-    const addLike = () => {
-        console.log('added like')
-        // fetch to recipe, create like join with current user and this recipe
-    }
+const View = ({ user_id, recipe }) => {
 
     return (
         <Container>
             <Row className={'justify-content-center recipe-header'}>
-                <h1>{recipe.title}</h1>
+                <h1>{recipe.name}</h1>
             </Row>
             <Row className={'justify-content-center'}>
                 <h3>by: {recipe.username}</h3>
@@ -32,9 +27,8 @@ const View = ({ recipe }) => {
                 </Col>
             </Row>
             <Row className={'justify-content-center'}>
-                <LikesComments likes={recipe.likes.length} comments={recipe.comments} addLike={addLike}/>
+                <LikesComments user_id={user_id} recipe={recipe}/>
             </Row>
-
         </Container>
     )
 }

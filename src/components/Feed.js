@@ -6,12 +6,16 @@ import RecipeForm from "./feed_components/RecipeForm";
 import FeedCard from "./feed_components/FeedCard";
 
 const Feed = ({ recipes }) => {
+  const renderFeedCards = () => {
+    return recipes.map(r => <FeedCard recipe={r}/>)
+  }
+
   return (
     <>
       <FeedBar />
       <Container className="mt-4">
         <h1>Latest Recipes</h1>
-        <FeedCard recipe={recipes[0]} />
+        {renderFeedCards()}
       </Container>
     </>
   );
