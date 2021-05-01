@@ -14,6 +14,7 @@ import TopNav from "./components/TopNav";
 import Feed from "./components/Feed";
 import Footer from "./components/Footer";
 import View from "./components/View";
+import UserView from './components/UserView'
 
 function App() {
   const [user, setUser] = useState({});
@@ -130,6 +131,10 @@ function App() {
                   recipe={recipes.find(r => r.id === urlId)}
                 />
             } 
+          }}/>
+          <Route exact path='/users/:id' render={routerProps => {
+            const urlId = parseInt(routerProps.match.params.id)
+              return <UserView user_id={urlId}/> 
           }}/>
            <Route
             exact path="/"
