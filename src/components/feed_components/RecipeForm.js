@@ -4,13 +4,13 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinusSquare } from "@fortawesome/free-regular-svg-icons";
 
-const RecipeForm = ({ user_id }) => {
+const RecipeForm = ({ user_id, fetchRecipes }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [instructions, setInstructions] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [ingredients, setIngredients] = useState([
-    { name: "", unit_of_measure: "", quantity: 0 },
+    { name: "", quantity_type: "", quantity: 0 },
   ]);
 
   const handleSubmit = (e) => {
@@ -31,7 +31,7 @@ const RecipeForm = ({ user_id }) => {
       }),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => fetchRecipes());
   };
 
   const unitsOfMeasurement = [
@@ -59,13 +59,6 @@ const RecipeForm = ({ user_id }) => {
     ingredientToChange[e.target.name] = e.target.value;
 
     setIngredients(currentIngredients);
-    // setIngredients({
-    //   ...ingredients,
-    //   [e.target.id]: {
-    //     ...ingredients[e.target.id],
-    //     [e.target.name]: e.target.value,
-    //   },
-    // });
   };
 
   const handleDescriptionChange = (e) => {
@@ -79,7 +72,7 @@ const RecipeForm = ({ user_id }) => {
       ...ingredients,
       {
         name: "",
-        unit_of_measure: "",
+        quantity_type: "",
         quantity: 0,
       },
     ]);
@@ -114,9 +107,9 @@ const RecipeForm = ({ user_id }) => {
             <Form.Control
               as="select"
               id={key}
-              name="unit_of_measure"
+              name="quantity_type"
               options={unitsOfMeasurement}
-              value={ingredients[key].unit_of_measure}
+              value={ingredients[key].quantity_type}
               onChange={handleIngredientChange}
             >
               {renderOptions()}

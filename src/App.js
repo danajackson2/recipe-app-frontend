@@ -117,7 +117,13 @@ function App() {
           <Route
             exact
             path="/"
-            render={() => <Feed recipes={recipes} user_id={user.user_id} />}
+            render={() => (
+              <Feed
+                recipes={recipes}
+                user_id={user.user_id}
+                fetchRecipes={fetchRecipes}
+              />
+            )}
           />
         </Router>
       </div>
