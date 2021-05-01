@@ -149,6 +149,7 @@ function App() {
               <Feed
                 recipes={recipes}
                 user_id={user.user_id}
+                username={user.username}
                 user_likes={user.likes}
                 fetchRecipes={fetchRecipes}
                 routerProps={routerProps}

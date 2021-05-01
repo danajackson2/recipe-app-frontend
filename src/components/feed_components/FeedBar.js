@@ -77,6 +77,26 @@ const FeedBar = ({
               />
             )}
           </Col>
+          <Col xs={"auto"}>
+            <p className="ml-1">Your Recipes</p>
+          </Col>
+          <Col xs={"auto"}>
+            {filters.some((filter) => filter === "yours") ? (
+              <FontAwesomeIcon
+                className="feedbar-icon"
+                icon={faCheckSquare}
+                onClick={() =>
+                  setFilters(filters.filter((filter) => filter !== "yours"))
+                }
+              />
+            ) : (
+              <FontAwesomeIcon
+                className="feedbar-icon"
+                icon={faSquare}
+                onClick={() => setFilters([...filters, "yours"])}
+              />
+            )}
+          </Col>
         </Form.Row>
       </Form>
       <div className="feedbar-icon mr-3" onClick={() => setFormOpen(!formOpen)}>
