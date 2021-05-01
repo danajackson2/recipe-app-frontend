@@ -5,16 +5,15 @@ import FeedBar from "./feed_components/FeedBar";
 import RecipeForm from "./feed_components/RecipeForm";
 import FeedCard from "./feed_components/FeedCard";
 
-const Feed = ({ recipes }) => {
-  
+const Feed = ({ recipes, user_id, fetchRecipes }) => {
   const renderFeedCards = () => {
-    return recipes.map(r => <FeedCard recipe={r}/>)
-  }
+    return recipes.map((r) => <FeedCard recipe={r} />);
+  };
 
   return (
     <>
       <FeedBar />
-      <RecipeForm />
+      <RecipeForm user_id={user_id} fetchRecipes={fetchRecipes} />
       <Container className="mt-4">
         <h1>Latest Recipes</h1>
         {renderFeedCards()}
