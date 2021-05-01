@@ -23,6 +23,7 @@ function App() {
     if (localStorage.token) {
       persistUser(localStorage.token);
     }
+    fetchRecipes()
   }, [])
   
   const fetchRecipes = () => {
@@ -63,9 +64,9 @@ function App() {
 
   const handleAuthResponse = (data) => {
     if (data.user_id) {
-      const { username, user_id, token } = data;
+      const { username, user_id, token, likes } = data;
       localStorage.setItem("token", token);
-      setUser({ username, user_id });
+      setUser({ username, user_id, likes });
     } else {
       alert(`Username ${data.username}`);
     }
@@ -77,14 +78,24 @@ function App() {
     })
       .then((res) => res.json())
       .then((data) => {
-        const { username, user_id } = data;
-        setUser({ username, user_id });
+        const { username, user_id, likes } = data;
+        setUser({ username, user_id, likes });
       });
   };
 
   function signOut() {
     localStorage.clear();
     setUser({});
+  }
+
+  const updateUserLikes = (like, type) => {
+    if (type === 'rmv'){
+      const newLikes = user.likes.filter(likeItem => likeItem.id !== like.id)
+      setUser({...user, likes: newLikes})
+    } else {
+      const newLikes = [...user.likes, like]
+      setUser({...user, likes: newLikes})
+    }
   }
 
   return (
@@ -95,7 +106,12 @@ function App() {
           <Route exact path='/recipes/:id' render={routerProps => {
             const urlId = parseInt(routerProps.match.params.id)
             if(recipes.map(r => r.id).includes(urlId)){
-              return <View user_id={user.id} recipe={recipes.find(r => r.id === urlId)}/>
+              return <View 
+                fetchRecipes={fetchRecipes} 
+                updateUserLikes={updateUserLikes} 
+                user={user} 
+                recipe={recipes.find(r => r.id === urlId)}
+              />
             } 
           }}/>
           <Route exact path='/' render={() => <Feed recipes={recipes} />}/>
