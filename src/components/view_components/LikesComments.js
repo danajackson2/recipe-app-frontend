@@ -29,34 +29,37 @@ const LikesComments = ({ recipe, user, updateUserLikes, fetchRecipes}) => {
     }
 
     const toggleLike = () => {
-        //if no user don't run
-        const like = user.likes.find(like => like.recipe_id === recipe.id)
-        if (!!like) {
-            fetch(`${process.env.REACT_APP_BASE_URL}/likes/${like.id}`,{
-                method: 'DELETE',
-                headers: {Authorization: `Bearer ${localStorage.token}`}
-            })
-            .then(res => res.json())
-            .then(() => {
-                updateUserLikes(like, 'rmv')
-                let span = document.querySelector('#like-count')
-                let count = parseInt(document.querySelector('#like-count').textContent)
-                span.textContent = count - 1
-                //fetchRecipes() ??
-            })
+        if (!!user){
+            const like = user.likes.find(like => like.recipe_id === recipe.id)
+            if (!!like) {
+                fetch(`${process.env.REACT_APP_BASE_URL}/likes/${like.id}`,{
+                    method: 'DELETE',
+                    headers: {Authorization: `Bearer ${localStorage.token}`}
+                })
+                .then(res => res.json())
+                .then(() => {
+                    updateUserLikes(like, 'rmv')
+                    let span = document.querySelector('#like-count')
+                    let count = parseInt(document.querySelector('#like-count').textContent)
+                    span.textContent = count - 1
+                    //fetchRecipes() ??
+                })
+            } else {
+                fetch(`${process.env.REACT_APP_BASE_URL}/likes`,{
+                    method: 'POST',
+                    headers: {'content-type':'application/json', Authorization: `Bearer ${localStorage.token}`},
+                    body: JSON.stringify({like: {user_id: user.user_id, recipe_id: recipe.id }})
+                })
+                .then(res => res.json())
+                .then(like => {
+                    updateUserLikes(like, 'add')
+                    let span = document.querySelector('#like-count')
+                    let count = parseInt(document.querySelector('#like-count').textContent)
+                    span.textContent = count + 1
+                })
+            }
         } else {
-            fetch(`${process.env.REACT_APP_BASE_URL}/likes`,{
-                method: 'POST',
-                headers: {'content-type':'application/json', Authorization: `Bearer ${localStorage.token}`},
-                body: JSON.stringify({like: {user_id: user.user_id, recipe_id: recipe.id }})
-            })
-            .then(res => res.json())
-            .then(like => {
-                updateUserLikes(like, 'add')
-                let span = document.querySelector('#like-count')
-                let count = parseInt(document.querySelector('#like-count').textContent)
-                span.textContent = count + 1
-            })
+            alert('Must be signed in.')
         }
     }
 
