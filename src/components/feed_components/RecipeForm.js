@@ -9,9 +9,9 @@ const RecipeForm = ({ user_id }) => {
   const [description, setDescription] = useState("");
   const [instructions, setInstructions] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [ingredients, setIngredients] = useState({
-    0: { name: "", unit_of_measure: "", quantity: 0 },
-  });
+  const [ingredients, setIngredients] = useState([
+    { name: "", unit_of_measure: "", quantity: 0 },
+  ]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,13 +53,19 @@ const RecipeForm = ({ user_id }) => {
   };
 
   const handleIngredientChange = (e) => {
-    setIngredients({
-      ...ingredients,
-      [e.target.id]: {
-        ...ingredients[e.target.id],
-        [e.target.name]: e.target.value,
-      },
-    });
+    let currentIngredients = [...ingredients];
+    let ingredientToChange = currentIngredients[e.target.id];
+
+    ingredientToChange[e.target.name] = e.target.value;
+
+    setIngredients(currentIngredients);
+    // setIngredients({
+    //   ...ingredients,
+    //   [e.target.id]: {
+    //     ...ingredients[e.target.id],
+    //     [e.target.name]: e.target.value,
+    //   },
+    // });
   };
 
   const handleDescriptionChange = (e) => {
@@ -69,20 +75,20 @@ const RecipeForm = ({ user_id }) => {
   };
 
   const addIngredient = () => {
-    setIngredients({
+    setIngredients([
       ...ingredients,
-      [Object.keys(ingredients).length]: {
+      {
         name: "",
         unit_of_measure: "",
         quantity: 0,
       },
-    });
+    ]);
   };
 
   const removeIngredient = (rowKey) => {
     console.log(rowKey);
-    let newIngredients = {};
-    for (let index = 0; index < Object.keys(ingredients).length; index++) {
+    let newIngredients = [];
+    for (let index = 0; index < ingredients.length; index++) {
       if (index < parseInt(rowKey)) {
         newIngredients[index] = ingredients[index];
       } else if (index > parseInt(rowKey)) {
