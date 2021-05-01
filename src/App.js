@@ -13,41 +13,43 @@ import "./custom.scss";
 import TopNav from "./components/TopNav";
 import Feed from "./components/Feed";
 import Footer from "./components/Footer";
-import View from './components/View';
+import View from "./components/View";
 
 function App() {
   const [user, setUser] = useState({});
-  const [recipes, setRecipes] = useState(JSON.parse(localStorage.getItem("recipes")) || [])
+  const [recipes, setRecipes] = useState(
+    JSON.parse(localStorage.getItem("recipes")) || []
+  );
 
   useEffect(() => {
     if (localStorage.token) {
       persistUser(localStorage.token);
     }
-  }, [])
-  
+  }, []);
+
   const fetchRecipes = () => {
     fetch(`${process.env.REACT_APP_BASE_URL}/recipes`, {
       headers: {
-        'content-type':'application/json', 
-        Authorization: `Bearer ${localStorage.token}`
-      }   
+        "content-type": "application/json",
+        Authorization: `Bearer ${localStorage.token}`,
+      },
     })
-    .then(res => res.json())
-    .then(recipes => {
-      setRecipes(recipes)
-      localStorage.setItem('recipes', JSON.stringify(recipes))
-    })
-  }
+      .then((res) => res.json())
+      .then((recipes) => {
+        setRecipes(recipes);
+        localStorage.setItem("recipes", JSON.stringify(recipes));
+      });
+  };
 
-  function signUp(username, password){
-    fetch(`${process.env.REACT_APP_BASE_URL}/users`,{
-      method: 'POST',
-      headers: {'content-type':'application/json'},
-      body: JSON.stringify({new_user: {username, password}})
+  function signUp(username, password) {
+    fetch(`${process.env.REACT_APP_BASE_URL}/users`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ new_user: { username, password } }),
     })
-    .then(res => res.json())
-    .then(data => handleAuthResponse(data))
-    .then(() => fetchRecipes())
+      .then((res) => res.json())
+      .then((data) => handleAuthResponse(data))
+      .then(() => fetchRecipes());
   }
 
   function signIn(username, password) {
@@ -56,9 +58,9 @@ function App() {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ username, password }),
     })
-    .then(res => res.json())
-    .then(data => handleAuthResponse(data))
-    .then(() => fetchRecipes())
+      .then((res) => res.json())
+      .then((data) => handleAuthResponse(data))
+      .then(() => fetchRecipes());
   }
 
   const handleAuthResponse = (data) => {
@@ -91,14 +93,32 @@ function App() {
     <>
       <div className="body">
         <Router>
-          <TopNav user={user} signIn={signIn} signUp={signUp} signOut={signOut}/>
-          <Route exact path='/recipes/:id' render={routerProps => {
-            const urlId = parseInt(routerProps.match.params.id)
-            if(recipes.map(r => r.id).includes(urlId)){
-              return <View user_id={user.id} recipe={recipes.find(r => r.id === urlId)}/>
-            } 
-          }}/>
-          <Route exact path='/' render={() => <Feed recipes={recipes} />}/>
+          <TopNav
+            user={user}
+            signIn={signIn}
+            signUp={signUp}
+            signOut={signOut}
+          />
+          <Route
+            exact
+            path="/recipes/:id"
+            render={(routerProps) => {
+              const urlId = parseInt(routerProps.match.params.id);
+              if (recipes.map((r) => r.id).includes(urlId)) {
+                return (
+                  <View
+                    user_id={user.id}
+                    recipe={recipes.find((r) => r.id === urlId)}
+                  />
+                );
+              }
+            }}
+          />
+          <Route
+            exact
+            path="/"
+            render={() => <Feed recipes={recipes} user_id={user.user_id} />}
+          />
         </Router>
       </div>
       <Footer />

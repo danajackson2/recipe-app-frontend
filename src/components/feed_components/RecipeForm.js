@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinusSquare } from "@fortawesome/free-regular-svg-icons";
 
-const RecipeForm = (user = { id: 1 }) => {
+const RecipeForm = ({ user_id }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [instructions, setInstructions] = useState("");
@@ -19,16 +19,19 @@ const RecipeForm = (user = { id: 1 }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.token}`,
       },
       body: JSON.stringify({
-        user_id: user.id,
+        user_id: user_id,
         name: title,
         description: description,
         recipe_items: ingredients,
         instructions: instructions,
-        image_url: imageUrl,
+        img: imageUrl,
       }),
-    });
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
   };
 
   const unitsOfMeasurement = [
