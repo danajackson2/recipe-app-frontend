@@ -102,18 +102,18 @@ function App() {
   };
 
   const updateRecipeLikes = (recipe_id, type) => {
-    let newRecipe = recipes.find(r => r.id === recipe_id)
+    let newRecipe = recipes.find((r) => r.id === recipe_id);
 
-    if (type === 'add'){
-      newRecipe = {...newRecipe, likes: newRecipe.likes + 1}
+    if (type === "add") {
+      newRecipe = { ...newRecipe, likes: newRecipe.likes + 1 };
     } else {
-      newRecipe = {...newRecipe, likes: newRecipe.likes - 1}
+      newRecipe = { ...newRecipe, likes: newRecipe.likes - 1 };
     }
 
-    const otherRecipes = recipes.filter(r => r.id !== recipe_id)
-    otherRecipes.push(newRecipe)
-    setRecipes(otherRecipes)
-  }
+    const otherRecipes = recipes.filter((r) => r.id !== recipe_id);
+    otherRecipes.push(newRecipe);
+    setRecipes(otherRecipes);
+  };
 
   return (
     <>
@@ -146,10 +146,12 @@ function App() {
               <Feed
                 recipes={recipes}
                 user_id={user.user_id}
+                user_likes={user.likes}
                 fetchRecipes={fetchRecipes}
                 routerProps={routerProps}
-              />)}
-            />
+              />
+            )}
+          />
         </Router>
       </div>
       <Footer />
