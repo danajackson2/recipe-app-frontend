@@ -6,7 +6,14 @@ import FeedBar from "./feed_components/FeedBar";
 import RecipeForm from "./feed_components/RecipeForm";
 import FeedCard from "./feed_components/FeedCard";
 
-const Feed = ({ recipes, user_id, user_likes, fetchRecipes, routerProps }) => {
+const Feed = ({
+  recipes,
+  user_id,
+  username,
+  user_likes,
+  fetchRecipes,
+  routerProps,
+}) => {
   const [formOpen, setFormOpen] = useState(false);
   const [filters, setFilters] = useState([]);
   const [sort, setSort] = useState("Date");
@@ -41,6 +48,12 @@ const Feed = ({ recipes, user_id, user_likes, fetchRecipes, routerProps }) => {
         user_likes.some((like) => like.recipe_id === recipe.id)
       );
     }
+    if (filters.some((f) => f === "yours")) {
+      sorted = sorted.filter((recipe) => {
+        return recipe.username === username;
+      });
+    }
+
     return sorted.map((r) => (
       <FeedCard key={r.id} recipe={r} routerProps={routerProps} />
     ));
@@ -62,7 +75,19 @@ const Feed = ({ recipes, user_id, user_likes, fetchRecipes, routerProps }) => {
       )}
       {formOpen && <RecipeForm user_id={user_id} fetchRecipes={fetchRecipes} />}
       <Container className="mt-4">
-        <h1>Latest Recipes</h1>
+        <h1>
+          {filters.some((filter) => filter === "yours") && "Your "}
+          {sort === "Date"
+            ? sortDirection === "desc"
+              ? "Latest"
+              : "First"
+            : sort === "Likes"
+            ? sortDirection === "desc"
+              ? "Most Liked"
+              : "Undiscovered"
+            : null}{" "}
+          Recipes {filters.some((filter) => filter === "liked") && "You Like"}
+        </h1>
         <div className="d-flex justify-content-center flex-wrap">
           {renderFeedCards()}
         </div>
