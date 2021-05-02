@@ -20,7 +20,7 @@ const TopNav = ({ user, signIn, signUp, signOut }) => {
     <>
       <Navbar bg="primary" className="justify-content-between">
         <LinkContainer exact to="/">
-          <Navbar.Brand>RecipeApp</Navbar.Brand>
+          <Navbar.Brand id='brand'>🍳 Get Cookin'</Navbar.Brand>
         </LinkContainer>
         {"username" in user ? (
           <div style={{ display: "flex" }}>

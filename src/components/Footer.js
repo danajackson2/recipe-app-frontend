@@ -14,7 +14,7 @@ const Footer = () => {
       <Container>
         <Row className="d-flex justify-content-center">
           <h2 className="mt-4 foot-title">
-            Insert Clever Recipe App Name Here
+            Now We're Cookin'
           </h2>
         </Row>
 

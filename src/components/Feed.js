@@ -73,7 +73,7 @@ const Feed = ({
           setSortDirection={setSortDirection}
         />
       )}
-      {formOpen && <RecipeForm user_id={user_id} fetchRecipes={fetchRecipes} />}
+      {formOpen && <RecipeForm user_id={user_id} fetchRecipes={fetchRecipes} setFormOpen={setFormOpen}/>}
       <Container className="mt-4">
         <h1>
           {filters.some((filter) => filter === "yours") && "Your "}

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinusSquare } from "@fortawesome/free-regular-svg-icons";
 
-const RecipeForm = ({ user_id, fetchRecipes }) => {
+const RecipeForm = ({ user_id, fetchRecipes, setFormOpen }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [instructions, setInstructions] = useState("");
@@ -15,6 +15,7 @@ const RecipeForm = ({ user_id, fetchRecipes }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!validSubmission()) return
     fetch(`${process.env.REACT_APP_BASE_URL}/recipes`, {
       method: "POST",
       headers: {
@@ -31,8 +32,27 @@ const RecipeForm = ({ user_id, fetchRecipes }) => {
       }),
     })
       .then((res) => res.json())
-      .then((data) => fetchRecipes());
+      .then((data) => fetchRecipes())
+      .then(() => {
+        setFormOpen(false)
+        setTitle('')
+        setInstructions('')
+        setImageUrl('')
+        setIngredients([{name: '', quantity_type: '', quantity: 0}])
+      })
   };
+
+  const validSubmission = () => {
+    if (title === '' || description === '' || instructions === '' || imageUrl === ''){
+      alert('Must fill out all form fields')
+      return false
+    }
+    if (ingredients.some(i => i.name === '' || i.quantity === 0)){
+      alert('Must fill out all form fields')
+      return false
+    }
+    return true
+  }
 
   const unitsOfMeasurement = [
     "N/A",
