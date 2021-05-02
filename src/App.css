@@ -193,3 +193,13 @@ p {
   display: flex;
 
 }
+
+#name-link {
+  text-decoration: none;
+  color: white;
+}
+
+#rec-name-link {
+  text-decoration: none;
+  color:#336858;
+}

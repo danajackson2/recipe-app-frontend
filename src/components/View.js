@@ -10,7 +10,7 @@ const View = ({ user, recipe, updateUserLikes, updateRecipeLikes, fetchRecipes }
                 <h1>{recipe.name}</h1>
             </Row>
             <Row className={'justify-content-center'}>
-                <h3>by: {recipe.username}</h3>
+                <h3>by: <a href={`/users/${recipe.user_id}`} id='rec-name-link'>{recipe.username}</a></h3>
             </Row>
             <Row className={'justify-content-center'}>
                 <Image src={recipe.img} className='view-image'/>

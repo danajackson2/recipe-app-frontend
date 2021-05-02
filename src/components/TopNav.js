@@ -24,7 +24,7 @@ const TopNav = ({ user, signIn, signUp, signOut }) => {
         </LinkContainer>
         {"username" in user ? (
           <div style={{ display: "flex" }}>
-            <h4 id="welcome">Hi, {user.username}!</h4>
+            <h4 id="welcome">Hi, <a id='name-link' href={`/users/${user.user_id}`}>{user.username}</a>!</h4>
             <Nav>
               <button onClick={signOut} className="btn btn-primary">
                 Sign Out
