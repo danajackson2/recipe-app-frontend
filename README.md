@@ -1,6 +1,6 @@
 # Get Cookin'
 
-This an instagram like app, inspired by MLH's Hack at Home ii Hackathon, was built in 48 hours. The theme was to build an app to make quarantine life at home more enjoyable and full.
+This instagram like app, inspired by MLH's Hack at Home ii Hackathon, was built in 48 hours. The theme was to build an app to make quarantine life at home more enjoyable and full.
 
 Check out Get Cookin' [here](http://getcookin.herokuapp.com) and a demo video can be seen [here](https://youtu.be/_qEbfMJCyGY)!
 
